@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
   dynamic res;
   Image image = Image.asset('assets/temp.png');
   Image imageNew = Image.asset('assets/temp.png');
-  File file;
+  late File file;
   bool preloaded = false;
   bool loaded = false;
 
@@ -263,7 +263,8 @@ class _MyAppState extends State<MyApp> {
                       color: Colors.grey,
                       height: 2,
                     ),
-                    onChanged: (String newValue) {
+                    onChanged: (String? newValue) {
+                      if (newValue == null) return;
                       setState(() {
                         dropdownValue = newValue;
                       });
@@ -304,7 +305,7 @@ class _MyAppState extends State<MyApp> {
                       );
                     }).toList(),
                   ),
-                  RaisedButton(
+                  ElevatedButton(
                     onPressed: () {
                       runAFunction(dropdownValue);
                     },
