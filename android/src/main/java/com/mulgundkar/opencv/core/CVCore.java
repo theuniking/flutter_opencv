@@ -718,44 +718,55 @@ public class CVCore {
     public byte[] warpPerspectiveTransform(byte[] byteData, ArrayList sourcePoints, ArrayList destinationPoints, ArrayList outputSize) {
         byte[] byteArray = new byte[0];
         try {
-            // Decode image from input byte array
+            System.out.println("Updated");
             List<Double> s = new ArrayList<>();
             List<Double> t = new ArrayList<>();
-            for(int i = 0; i<sourcePoints.size(); i++) {
-                s.add((double) ((Integer) sourcePoints.get(i)));
+            for (Object obj : sourcePoints) {
+                if (obj instanceof Number) {
+                    s.add(((Number) obj).doubleValue());
+                }
             }
-            for(int i = 0; i<destinationPoints.size(); i++) {
-                t.add((double) ((Integer) destinationPoints.get(i)));
+            for (Object obj : destinationPoints) {
+                if (obj instanceof Number) {
+                    t.add(((Number) obj).doubleValue());
+                }
             }
             Mat input = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
-            MatOfPoint2f src = new MatOfPoint2f(new Point(s.get(0), s.get(1)),
-            new Point(s.get(2), s.get(3)), new Point(s.get(4), s.get(5)),
-            new Point(s.get(6), s.get(7)));
-            MatOfPoint2f dst = new MatOfPoint2f(new Point(t.get(0), t.get(1)),
-                    new Point(t.get(2), t.get(3)), new Point(t.get(4), t.get(5)),
-                    new Point(t.get(6), t.get(7)));
+            MatOfPoint2f src = new MatOfPoint2f(
+                    new Point(s.get(0), s.get(1)),
+                    new Point(s.get(2), s.get(3)),
+                    new Point(s.get(4), s.get(5)),
+                    new Point(s.get(6), s.get(7))
+            );
+            MatOfPoint2f dst = new MatOfPoint2f(
+                    new Point(t.get(0), t.get(1)),
+                    new Point(t.get(2), t.get(3)),
+                    new Point(t.get(4), t.get(5)),
+                    new Point(t.get(6), t.get(7))
+            );
             Mat perspectiveMatrix = Imgproc.getPerspectiveTransform(src, dst);
-//
-            Mat translationMatrix = Mat.eye(3, 3, CV_32F);
+
+            Mat translationMatrix = Mat.eye(3, 3, CvType.CV_32F);
             translationMatrix.put(0, 2, -0);
             translationMatrix.put(1, 2, -500);
             Mat inverseTranslationMatrix = translationMatrix.inv();
-            Mat scalingMatrix = Mat.eye(3, 3, CV_32F);
-            translationMatrix.put(0, 0, 0.17066666666666666);
-            translationMatrix.put(1, 1, 0.17066666666666666);
+
+            Mat scalingMatrix = Mat.eye(3, 3, CvType.CV_32F);
+            scalingMatrix.put(0, 0, 0.17066666666666666);
+            scalingMatrix.put(1, 1, 0.17066666666666666);
             Mat inverseScalingMatrix = scalingMatrix.inv();
 
             Mat temp1 = new Mat();
-            Core.gemm(scalingMatrix, translationMatrix, 1.0, new Mat(), 0.0, temp1);
+            Core.gemm(scalingMatrix, translationMatrix, 1.0, new Mat(), 0.0, temp1, 0);
 
             Mat temp2 = new Mat();
-            Core.gemm(perspectiveMatrix, temp1, 1.0, new Mat(), 0.0, temp2);
+            Core.gemm(perspectiveMatrix, temp1, 1.0, new Mat(), 0.0, temp2, 0);
 
             Mat temp3 = new Mat();
-            Core.gemm(inverseScalingMatrix, temp1, 1.0, new Mat(), 0.0, temp3);
+            Core.gemm(inverseScalingMatrix, temp1, 1.0, new Mat(), 0.0, temp3, 0);
 
             Mat finalTransform = new Mat();
-            Core.gemm(inverseTranslationMatrix, temp3, 1.0, new Mat(), 0.0, finalTransform);
+            Core.gemm(inverseTranslationMatrix, temp3, 1.0, new Mat(), 0.0, finalTransform, 0);
 
 
             // Apply perspective transform
