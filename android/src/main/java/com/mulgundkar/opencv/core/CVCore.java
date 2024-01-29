@@ -718,7 +718,7 @@ public class CVCore {
     public byte[] warpPerspectiveTransform(byte[] byteData, ArrayList sourcePoints, ArrayList destinationPoints, ArrayList outputSize) {
         byte[] byteArray = new byte[0];
         try {
-            System.out.println("Updated");
+            System.out.println("Updated2");
             List<Double> s = new ArrayList<>();
             List<Double> t = new ArrayList<>();
             for (Object obj : sourcePoints) {
@@ -749,24 +749,30 @@ public class CVCore {
             Mat translationMatrix = Mat.eye(3, 3, CvType.CV_32F);
             translationMatrix.put(0, 2, -0);
             translationMatrix.put(1, 2, -500);
-            Mat inverseTranslationMatrix = translationMatrix.inv();
 
             Mat scalingMatrix = Mat.eye(3, 3, CvType.CV_32F);
             scalingMatrix.put(0, 0, 0.17066666666666666);
             scalingMatrix.put(1, 1, 0.17066666666666666);
+
+            Mat inverseTranslationMatrix = translationMatrix.inv();
             Mat inverseScalingMatrix = scalingMatrix.inv();
 
+// Ensure all matrices are of the same type
+            perspectiveMatrix.convertTo(perspectiveMatrix, CvType.CV_32F);
+            inverseTranslationMatrix.convertTo(inverseTranslationMatrix, CvType.CV_32F);
+            inverseScalingMatrix.convertTo(inverseScalingMatrix, CvType.CV_32F);
+
             Mat temp1 = new Mat();
-            Core.gemm(scalingMatrix, translationMatrix, 1.0, new Mat(), 0.0, temp1, 0);
+            Core.gemm(scalingMatrix, translationMatrix, 1.0, new Mat(), 0.0, temp1);
 
             Mat temp2 = new Mat();
-            Core.gemm(perspectiveMatrix, temp1, 1.0, new Mat(), 0.0, temp2, 0);
+            Core.gemm(perspectiveMatrix, temp1, 1.0, new Mat(), 0.0, temp2);
 
             Mat temp3 = new Mat();
-            Core.gemm(inverseScalingMatrix, temp1, 1.0, new Mat(), 0.0, temp3, 0);
+            Core.gemm(inverseScalingMatrix, temp2, 1.0, new Mat(), 0.0, temp3);
 
             Mat finalTransform = new Mat();
-            Core.gemm(inverseTranslationMatrix, temp3, 1.0, new Mat(), 0.0, finalTransform, 0);
+            Core.gemm(inverseTranslationMatrix, temp3, 1.0, new Mat(), 0.0, finalTransform);
 
 
             // Apply perspective transform
