@@ -1,32 +1,24 @@
 package com.mulgundkar.opencv.core;
 
+import static org.opencv.core.CvType.CV_32F;
+
 import android.annotation.SuppressLint;
 
-import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
-import org.opencv.core.MatOfByte;
-import org.opencv.core.MatOfInt;
-import org.opencv.core.MatOfPoint2f;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import io.flutter.Log;
-import io.flutter.embedding.engine.plugins.FlutterPlugin;
-import io.flutter.plugin.common.MethodCall;
-import io.flutter.plugin.common.MethodChannel;
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
-import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 /**
  * OpenCV4Plugin
@@ -205,7 +197,7 @@ public class CVCore {
             Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
 
             // Creating kernel matrix
-            Mat kernel = Mat.ones((int) kernelSize.get(0), (int) kernelSize.get(1), CvType.CV_32F);
+            Mat kernel = Mat.ones((int) kernelSize.get(0), (int) kernelSize.get(1), CV_32F);
 
             for (int i = 0; i < kernel.rows(); i++) {
                 for (int j = 0; j < kernel.cols(); j++) {
@@ -294,7 +286,7 @@ public class CVCore {
             Mat src = Imgcodecs.imdecode(new MatOfByte(byteData), Imgcodecs.IMREAD_UNCHANGED);
 
             // Creating kernel matrix
-            Mat kernel = Mat.ones((int) kernelSize.get(0), (int) kernelSize.get(0), CvType.CV_32F);
+            Mat kernel = Mat.ones((int) kernelSize.get(0), (int) kernelSize.get(0), CV_32F);
 
             // Morphological operation
             Imgproc.morphologyEx(src, dst, operation, kernel);
@@ -742,20 +734,94 @@ public class CVCore {
             MatOfPoint2f dst = new MatOfPoint2f(new Point(t.get(0), t.get(1)),
                     new Point(t.get(2), t.get(3)), new Point(t.get(4), t.get(5)),
                     new Point(t.get(6), t.get(7)));
-            Mat warpMat = Imgproc.getPerspectiveTransform(src, dst);
+            Mat perspectiveMatrix = Imgproc.getPerspectiveTransform(src, dst);
+//
+            Mat translationMatrix = Mat.eye(3, 3, CV_32F);
+            translationMatrix.put(0, 2, -0);
+            translationMatrix.put(1, 2, -500);
+            Mat inverseTranslationMatrix = translationMatrix.inv();
+            Mat scalingMatrix = Mat.eye(3, 3, CV_32F);
+            translationMatrix.put(0, 0, 0.17066666666666666);
+            translationMatrix.put(1, 1, 0.17066666666666666);
+            Mat inverseScalingMatrix = scalingMatrix.inv();
+
+            Mat temp1 = new Mat();
+            Core.gemm(scalingMatrix, translationMatrix, 1.0, new Mat(), 0.0, temp1);
+
+            Mat temp2 = new Mat();
+            Core.gemm(perspectiveMatrix, temp1, 1.0, new Mat(), 0.0, temp2);
+
+            Mat temp3 = new Mat();
+            Core.gemm(inverseScalingMatrix, temp1, 1.0, new Mat(), 0.0, temp3);
+
+            Mat finalTransform = new Mat();
+            Core.gemm(inverseTranslationMatrix, temp3, 1.0, new Mat(), 0.0, finalTransform);
+
+
+            // Apply perspective transform
+            Mat mat = new Mat(4, 2, CV_32F);
+            mat.put(0, 0, 0, 0);
+            mat.put(1, 0, 0, input.height());
+            mat.put(2, 0, input.width(), input.height());
+            mat.put(3, 0, input.width(), 0);
+            Mat rect = mat.reshape(2, 1);
+            MatOfPoint2f transformedRect = new MatOfPoint2f();
+            Core.perspectiveTransform(rect, transformedRect, finalTransform);
+
+            Point[] boundingBox = computeAxisAlignedBoundingBox(transformedRect);
+            int transformedWidth = (int) Math.round(boundingBox[1].x - boundingBox[0].x);
+            int transformedHeight = (int) Math.round(boundingBox[1].y - boundingBox[0].y);
+            int xTranslation = -(int) Math.round(boundingBox[0].x);
+            int yTranslation = -(int) Math.round(boundingBox[0].y);
+
+            Mat finalTranslationMatrix = Mat.eye(3, 3, CV_32F);
+            double[] row0 = translationMatrix.get(0, 2);
+            double[] row1 = translationMatrix.get(1, 2);
+            row0[0] += xTranslation;
+            row1[0] += yTranslation;
+            translationMatrix.put(0, 2, row0);
+            translationMatrix.put(1, 2, row1);
+            Mat combinedTransform = new Mat();
+            Core.gemm(finalTranslationMatrix, finalTransform, 1, new Mat(), 0, combinedTransform);
+            Mat transformedImg = new Mat();
+            Size size = new Size(transformedWidth, transformedHeight);
+            Imgproc.warpPerspective(input, transformedImg, combinedTransform, size);
+
+
             // This is you new image as Mat
-            Mat destImage = new Mat();
-            Imgproc.warpPerspective(input, destImage, warpMat, new Size((double) outputSize.get(0), (double) outputSize.get(1)));
+//            Mat destImage = new Mat();
+//            Imgproc.warpPerspective(input, destImage, perspectiveMatrix, new Size((double) outputSize.get(0), (double) outputSize.get(1)));
             // instantiating an empty MatOfByte class
             MatOfByte matOfByte = new MatOfByte();
             // Converting the Mat object to MatOfByte
-            Imgcodecs.imencode(".jpg", destImage, matOfByte);
+            Imgcodecs.imencode(".jpg", transformedImg, matOfByte);
             byteArray = matOfByte.toArray();
         } catch (Exception e) {
             System.out.println("OpenCV Error: " + e.toString());
         }
         return byteArray;
     }
+
+    private static Point[] computeAxisAlignedBoundingBox(MatOfPoint2f rect) {
+        double minX = Double.MAX_VALUE;
+        double minY = Double.MAX_VALUE;
+        double maxX = Double.MIN_VALUE;
+        double maxY = Double.MIN_VALUE;
+
+        Point[] points = rect.toArray();
+        for (Point point : points) {
+            if (point.x < minX) minX = point.x;
+            if (point.y < minY) minY = point.y;
+            if (point.x > maxX) maxX = point.x;
+            if (point.y > maxY) maxY = point.y;
+        }
+
+        Point minPoint = new Point(minX, minY);
+        Point maxPoint = new Point(maxX, maxY);
+
+        return new Point[]{minPoint, maxPoint};
+    }
+
 
     @SuppressLint("MissingPermission")
     public byte[] grabCut(byte[] byteData, int px, int py, int qx, int qy, int itercount, int mode) {
