@@ -718,7 +718,6 @@ public class CVCore {
     public byte[] warpPerspectiveTransform(byte[] byteData, ArrayList sourcePoints, ArrayList destinationPoints, ArrayList outputSize) {
         byte[] byteArray = new byte[0];
         try {
-            System.out.println("Updated2");
             List<Double> s = new ArrayList<>();
             List<Double> t = new ArrayList<>();
             for (Object obj : sourcePoints) {
@@ -811,7 +810,7 @@ public class CVCore {
             // instantiating an empty MatOfByte class
             MatOfByte matOfByte = new MatOfByte();
             // Converting the Mat object to MatOfByte
-            Imgcodecs.imencode(".jpg", transformedImg, matOfByte);
+            Imgcodecs.imencode(".png", transformedImg, matOfByte);
             byteArray = matOfByte.toArray();
         } catch (Exception e) {
             System.out.println("OpenCV Error: " + e.toString());
