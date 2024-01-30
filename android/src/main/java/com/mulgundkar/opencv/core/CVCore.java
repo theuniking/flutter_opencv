@@ -3,6 +3,8 @@ package com.mulgundkar.opencv.core;
 import static org.opencv.core.CvType.CV_32F;
 
 import android.annotation.SuppressLint;
+import android.os.Environment;
+import android.widget.Toast;
 
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -17,6 +19,9 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -812,6 +817,13 @@ public class CVCore {
             // Converting the Mat object to MatOfByte
             Imgcodecs.imencode(".png", transformedImg, matOfByte);
             byteArray = matOfByte.toArray();
+
+            File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            File file = new File(downloadsDir, "brother.png");
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(byteArray);
+            fos.flush();
+            fos.close();
         } catch (Exception e) {
             System.out.println("OpenCV Error: " + e.toString());
         }
