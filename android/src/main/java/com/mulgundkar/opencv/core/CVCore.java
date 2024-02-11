@@ -715,7 +715,7 @@ public class CVCore {
     }
 
     @SuppressLint("MissingPermission")
-    public byte[] warpPerspectiveTransform(byte[] byteData, ArrayList sourcePoints, ArrayList destinationPoints, float xOffset, float yOffset, float scaleFactor, ArrayList outputSize) {
+    public byte[] warpPerspectiveTransform(byte[] byteData, ArrayList sourcePoints, ArrayList destinationPoints, double xOffset, double yOffset, double scaleFactor, ArrayList outputSize) {
         byte[] byteArray = new byte[0];
         try {
             List<Double> s = new ArrayList<>();
