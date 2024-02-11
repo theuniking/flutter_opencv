@@ -789,8 +789,9 @@ public class CVCore {
             System.out.println("Bounding box 0 = " + boundingBox[0]);
             int transformedWidth = (int) Math.round(boundingBox[1].x - boundingBox[0].x + 0.5);
             int transformedHeight = (int) Math.round(boundingBox[1].y - boundingBox[0].y + 0.5);
-            int xTranslation = -(int) Math.round(boundingBox[0].x);
+            int xTranslation = -(int) Math.round(boundingBox[0].x + 100);
             int yTranslation = -(int) Math.round(boundingBox[0].y);
+
 
             Mat finalTranslationMatrix = Mat.eye(3, 3, CV_32F);
             double[] row0 = translationMatrix.get(0, 2);
@@ -802,7 +803,7 @@ public class CVCore {
             Mat combinedTransform = new Mat();
             Core.gemm(finalTranslationMatrix, finalTransform, 1, new Mat(), 0, combinedTransform);
             Mat transformedImg = new Mat();
-            Size size = new Size(transformedWidth + 200, transformedHeight);
+            Size size = new Size(transformedWidth, transformedHeight);
             Imgproc.warpPerspective(input, transformedImg, combinedTransform, size);
 
 
