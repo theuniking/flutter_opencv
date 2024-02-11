@@ -802,7 +802,7 @@ public class CVCore {
             Mat combinedTransform = new Mat();
             Core.gemm(finalTranslationMatrix, finalTransform, 1, new Mat(), 0, combinedTransform);
             Mat transformedImg = new Mat();
-            Size size = new Size(transformedWidth, transformedHeight);
+            Size size = new Size(transformedWidth + 200, transformedHeight);
             Imgproc.warpPerspective(input, transformedImg, combinedTransform, size);
 
 
