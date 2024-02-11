@@ -789,7 +789,7 @@ public class CVCore {
             System.out.println("Bounding box 0 = " + boundingBox[0]);
             int transformedWidth = (int) Math.round(boundingBox[1].x - boundingBox[0].x + 0.5);
             int transformedHeight = (int) Math.round(boundingBox[1].y - boundingBox[0].y + 0.5);
-            int xTranslation = -(int) Math.round(boundingBox[0].x + 100);
+            int xTranslation = -(int) Math.round(boundingBox[0].x + 500);
             int yTranslation = -(int) Math.round(boundingBox[0].y);
 
 
