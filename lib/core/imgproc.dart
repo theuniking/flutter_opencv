@@ -940,6 +940,9 @@ class ImgProc {
   static Future<dynamic> warpPerspectiveTransform(Uint8List byteData,
       {required List sourcePoints,
       required List destinationPoints,
+        required double xOffset,
+        required double yOffset,
+        required double scaleFactor,
       required List<double> outputSize}) async {
     /// Variable to store operation result
     final dynamic result =
@@ -947,6 +950,9 @@ class ImgProc {
       'byteData': byteData,
       'sourcePoints': sourcePoints,
       'destinationPoints': destinationPoints,
+      'xOffset': xOffset,
+      'yOffset': yOffset,
+      'scaleFactor': scaleFactor,
       'outputSize': outputSize
     });
 

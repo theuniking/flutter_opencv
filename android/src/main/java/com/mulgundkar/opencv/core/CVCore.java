@@ -715,7 +715,7 @@ public class CVCore {
     }
 
     @SuppressLint("MissingPermission")
-    public byte[] warpPerspectiveTransform(byte[] byteData, ArrayList sourcePoints, ArrayList destinationPoints, ArrayList outputSize) {
+    public byte[] warpPerspectiveTransform(byte[] byteData, ArrayList sourcePoints, ArrayList destinationPoints, float xOffset, float yOffset, float scaleFactor, ArrayList outputSize) {
         byte[] byteArray = new byte[0];
         try {
             List<Double> s = new ArrayList<>();
@@ -746,12 +746,12 @@ public class CVCore {
             Mat perspectiveMatrix = Imgproc.getPerspectiveTransform(src, dst);
 
             Mat translationMatrix = Mat.eye(3, 3, CvType.CV_32F);
-            translationMatrix.put(0, 2, -0);
-            translationMatrix.put(1, 2, -500);
+            translationMatrix.put(0, 2, -xOffset);
+            translationMatrix.put(1, 2, -yOffset);
 
             Mat scalingMatrix = Mat.eye(3, 3, CvType.CV_32F);
-            scalingMatrix.put(0, 0, 0.17066666666666666);
-            scalingMatrix.put(1, 1, 0.17066666666666666);
+            scalingMatrix.put(0, 0, scaleFactor);
+            scalingMatrix.put(1, 1, scaleFactor);
 
             Mat inverseTranslationMatrix = translationMatrix.inv();
             Mat inverseScalingMatrix = scalingMatrix.inv();

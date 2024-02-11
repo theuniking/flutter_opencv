@@ -207,6 +207,9 @@ class _MyAppState extends State<MyApp> {
           res = await ImgProc.warpPerspectiveTransform(await file.readAsBytes(),
               sourcePoints: [113, 137, 260, 137, 138, 379, 271, 340],
               destinationPoints: [0, 0, 612, 0, 0, 459, 612, 459],
+              xOffset: 0,
+              yOffset: 500,
+              scaleFactor: 0.17066666666666666,
               outputSize: [612, 459]);
           break;
         case 'grabCut':
