@@ -795,8 +795,8 @@ public class CVCore {
             double[] row1 = translationMatrix.get(1, 2);
             row0[0] += xTranslation;
             row1[0] += yTranslation;
-            translationMatrix.put(0, 2, row0);
-            translationMatrix.put(1, 2, row1);
+            finalTranslationMatrix.put(0, 2, row0);
+            finalTranslationMatrix.put(1, 2, row1);
             Mat combinedTransform = new Mat();
             Core.gemm(finalTranslationMatrix, finalTransform, 1, new Mat(), 0, combinedTransform);
             Mat transformedImg = new Mat();
