@@ -789,14 +789,14 @@ public class CVCore {
             int transformedHeight = (int) Math.round(boundingBox[1].y - boundingBox[0].y + 0.5);
             int xTranslation = -(int) Math.round(boundingBox[0].x);
             int yTranslation = -(int) Math.round(boundingBox[0].y);
-            System.out.println("yT: " + yTranslation);
+            System.out.println("yTranslation: " + yTranslation);
 
 
             Mat finalTranslationMatrix = Mat.eye(3, 3, CV_32F);
             double[] row0 = translationMatrix.get(0, 2);
             double[] row1 = translationMatrix.get(1, 2);
             row0[0] += xTranslation;
-            row1[0] += yTranslation;
+            row1[0] -= yTranslation;
             finalTranslationMatrix.put(0, 2, row0);
             finalTranslationMatrix.put(1, 2, row1);
             Mat combinedTransform = new Mat();
