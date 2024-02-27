@@ -791,13 +791,13 @@ public class CVCore {
             int yTranslation = -(int) Math.round(boundingBox[0].y);
             System.out.println("boundingBox[1].y: " + boundingBox[1].y);
             System.out.println("boundingBox[0].y: " + boundingBox[0].y);
-            System.out.println("tranheight: " + transformedHeight);
+            System.out.println("transformedHeight: " + transformedHeight);
 
             Mat finalTranslationMatrix = Mat.eye(3, 3, CV_32F);
             double[] row0 = translationMatrix.get(0, 2);
             double[] row1 = translationMatrix.get(1, 2);
-            System.out.println("row1: " + row1);
-            System.out.println("row0: " + row0);
+            System.out.println("row0[0]: " + row0[0] + ", and row0[1]: " + row0[1]);
+            System.out.println("row1[0]: " + row1[0] + ", and row1[1]: " + row1[1]);
             row0[0] += xTranslation;
             row1[0] += yTranslation;
             finalTranslationMatrix.put(0, 2, row0);
