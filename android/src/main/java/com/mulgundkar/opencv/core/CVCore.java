@@ -788,8 +788,8 @@ public class CVCore {
             int transformedWidth = (int) Math.round(boundingBox[1].x - boundingBox[0].x + 0.5);
             int transformedHeight = (int) Math.round(boundingBox[1].y - boundingBox[0].y + 0.5);
             int xTranslation = -(int) Math.round(boundingBox[0].x);
-            int yTranslation = -(int) Math.round(boundingBox[0].y);
-            System.out.println("yTranslation: " + yTranslation);
+            int yTranslation = -(int) Math.round(boundingBox[1].y);
+            System.out.println("yTranslation2: " + yTranslation);
 
 
             Mat finalTranslationMatrix = Mat.eye(3, 3, CV_32F);
