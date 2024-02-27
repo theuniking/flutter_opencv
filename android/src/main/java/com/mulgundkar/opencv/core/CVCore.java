@@ -796,7 +796,7 @@ public class CVCore {
             double[] row0 = translationMatrix.get(0, 2);
             double[] row1 = translationMatrix.get(1, 2);
             row0[0] += xTranslation;
-            row1[0] -= yTranslation;
+            row1[0] -= 0;
             finalTranslationMatrix.put(0, 2, row0);
             finalTranslationMatrix.put(1, 2, row1);
             Mat combinedTransform = new Mat();
