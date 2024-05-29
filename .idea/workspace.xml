@@ -7,10 +7,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2a9873cf-3ab3-41b9-8a0a-6ec5c887c8fb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/android/.idea/compiler.xml" afterDir="false" />
+    <list default="true" id="2a9873cf-3ab3-41b9-8a0a-6ec5c887c8fb" name="Default Changelist" comment="print more info">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/mulgundkar/opencv/core/CVCore.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/mulgundkar/opencv/core/CVCore.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,6 +90,10 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 3
+}]]></component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
@@ -160,11 +163,14 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "checkingBoundingBox",
     "io.flutter.reload.alreadyRun": "true",
-    "last_opened_file_path": "C:/Users/theun/AndroidStudioProjects/flutter_opencv",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/theun/AndroidStudioProjects/flutter_opencv/android",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -184,6 +190,63 @@
       <option name="presentableId" value="Default" />
       <updated>1581343824980</updated>
     </task>
+    <task id="LOCAL-00001" summary="y translation is not minus but plus">
+      <option name="closed" value="true" />
+      <created>1709026104746</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1709026104746</updated>
+    </task>
+    <task id="LOCAL-00002" summary="bounding box 1 for y">
+      <option name="closed" value="true" />
+      <created>1709026440565</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1709026440565</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Bounding zero">
+      <option name="closed" value="true" />
+      <created>1709028097931</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1709028097931</updated>
+    </task>
+    <task id="LOCAL-00004" summary="+500 to ytranslation">
+      <option name="closed" value="true" />
+      <created>1709028527493</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1709028527493</updated>
+    </task>
+    <task id="LOCAL-00005" summary="print some info">
+      <option name="closed" value="true" />
+      <created>1709033340279</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1709033340279</updated>
+    </task>
+    <task id="LOCAL-00006" summary="print more info">
+      <option name="closed" value="true" />
+      <created>1709035756121</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1709035756121</updated>
+    </task>
+    <task id="LOCAL-00007" summary="print more info">
+      <option name="closed" value="true" />
+      <created>1709038917594</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1709038917594</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView">
@@ -234,11 +297,32 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="checkingBoundingBox" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="y translation is not minus but plus" />
+    <MESSAGE value="bounding box 1 for y" />
+    <MESSAGE value="Bounding zero" />
+    <MESSAGE value="+500 to ytranslation" />
+    <MESSAGE value="print some info" />
+    <MESSAGE value="print more info" />
+    <option name="LAST_COMMIT_MESSAGE" value="print more info" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/example/android/app/src/main/java/com/mulgundkar/opencv4_example/MainActivity.java">
