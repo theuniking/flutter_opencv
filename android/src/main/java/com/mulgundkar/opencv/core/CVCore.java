@@ -787,7 +787,7 @@ public class CVCore {
             Point[] boundingBox = computeAxisAlignedBoundingBox(transformedRect);
             int transformedWidth = (int) Math.round(boundingBox[1].x - boundingBox[0].x + 0.5);
             int transformedHeight = (int) Math.round(boundingBox[1].y - boundingBox[0].y + 0.5);
-            int xTranslation = -(int) Math.round(-480);
+            int xTranslation = -(int) Math.round(0);
 //            int yTranslation = -(int) Math.round(boundingBox[0].y);
             int yTranslation = -(int) Math.round(translationMatrix.get(1, 2)[0] + boundingBox[0].y);
             System.out.println("boundingBox[1].y: " + boundingBox[1].y);
