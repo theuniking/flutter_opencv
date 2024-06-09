@@ -794,7 +794,6 @@ public class CVCore {
             System.out.println("boundingBox[0].x: " + boundingBox[0].x);
             System.out.println("translationMatrix.get(1, 2)[0]: " + translationMatrix.get(1, 2)[0]);
             System.out.println("translationMatrix.get(0, 2)[0]: " + translationMatrix.get(0, 2)[0]);
-            System.out.println("translationMatrix.get(0, 2)[1]: " + translationMatrix.get(0, 2)[1]);
             System.out.println("transformedHeight: " + transformedHeight);
 
             Mat finalTranslationMatrix = Mat.eye(3, 3, CV_32F);
