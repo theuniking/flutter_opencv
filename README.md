@@ -126,7 +126,7 @@ None yet. I'm still profiling the plug-in for most use cases, and haven't faced 
 
 ### What OpenCV version is flutter_opencv built on top of?
 As of now, the plug-in is built on top of the builds provided for OpenCV v4.1. I know that OpenCV v4.3 is out already, but an issue with the android exportable AAR file prevents me from hosting multiple versions right now.
-In case you need to change your OpenCV version (read downgrade) while working with this library, you can change it the android/build.gradle file. Just change the dependency version to some other supported one for `implementation 'com.quickbirdstudios:opencv:4.1.0'`.
+In case you need to change your OpenCV version (read downgrade) while working with this library, you can change it the android/build.gradle file. Just change the dependency version to some other supported one for `implementation 'com.quickbirdstudios:opencv:4.5.0'`.
 
 Please keep in mind that the above build files (AARs) are provided by someone else - https://github.com/quickbirdstudios/opencv-android. I'm grateful to these guys, but unsure of how often (and far) they would maintain the build repositories, so I'm also working on putting multiple different versions of OpenCV builds on bintray - but it's low on the priority list for now.
 
